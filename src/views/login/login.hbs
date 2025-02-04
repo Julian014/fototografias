@@ -1,241 +1,44 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>HIDRAULIBOMBAS</title>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
   <link rel="manifest" href="/manifest.json">
+</head>
+<body class="background-image">
 
-<style>
-  /* Background styling */
-  .background-image {
-    background-image: url('imagenes/FONDO_LOGIN.jpg');
-    background-size: cover;
-    background-position: center;
-    min-height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-  }
-
-  /* Overlay styling */
-  .overlay {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: rgba(0, 0, 0, 0.6); /* Darker overlay for better contrast */
-    width: 100%;
-    height: 100%;
-    position: absolute;
-    top: 0;
-    left: 0;
-  }
-
-  /* Brand Logo */
-  .brand-logo {
-    position: absolute;
-    top: 20px;
-    left: 30px;
-    color: white;
-    font-size: 1.5rem;
-    font-weight: bold;
-    letter-spacing: 1px;
-  }
-
-  /* Login container styling */
-  .login-container {
-    background-color: #ffffff;
-    padding: 2.5rem;
-    border-radius: 10px;
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
-    width: 100%;
-    max-width: 400px;
-    z-index: 10;
-    text-align: center;
-  }
-
-  /* Logo styling */
-  .logo-container {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .company-logo {
-    width: 80px;
-    height: 80px;
-  }
-
-  /* Form group styling */
-  .form-group {
-    margin-bottom: 1rem;
-    text-align: left;
-  }
-
-  .form-group label {
-    display: block;
-    color: #333;
-    font-size: 0.875rem;
-    font-weight: bold;
-    margin-bottom: 0.5rem;
-  }
-
-  /* Input field styling */
-  .input-field {
-    width: 100%;
-    padding: 0.75rem;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    color: #4a5568;
-    box-shadow: inset 0 1px 3px rgba(0, 0, 0, 0.1);
-  }
-
-  .input-field:focus {
-    outline: none;
-    border-color: #3182ce;
-    box-shadow: 0 0 0 3px rgba(66, 153, 225, 0.3);
-  }
-
-  /* Button styling */
-  .login-button {
-    background-color: #1d4ed8;
-    color: #ffffff;
-    font-weight: bold;
-    padding: 0.75rem;
-    border-radius: 5px;
-    cursor: pointer;
-    width: 100%;
-    transition: background-color 0.3s;
-    font-size: 1rem;
-  }
-
-  .login-button:hover {
-    background-color: #1e3a8a;
-  }
-
-  /* Signup link styling */
-  .signup-link {
-    text-align: center;
-    margin-top: 1rem;
-    font-size: 0.875rem;
-  }
-
-  .signup-link a {
-    color: #1d4ed8;
-    font-weight: bold;
-    text-decoration: none;
-  }
-
-  .signup-link a:hover {
-    color: #bfdbfe;
-  }
-
-  /* Contact info styling */
-  .contact-info {
-    position: absolute;
-    bottom: 20px;
-    left: 30px;
-    color: #ffffff;
-    font-size: 0.875rem;
-  }
-
-  .contact-item {
-    display: flex;
-    align-items: center;
-    margin-bottom: 0.5rem;
-  }
-
-  .contact-item i {
-    margin-right: 10px;
-    color: #06b6d4;
-  }
-.company-logo {
-  width: 285.441px;
-  height: 122.727px;
-  position: relative;
-  left: -15px;
-  top: -15px;
-  transition: none;
-}
-
-</style></head>
-
-
-<body class="background-image" style="">
-
-  <div class="overlay" style="">
-    <div class="brand-logo">
-     INGENIERIA HIDRAULIBOMBAS
-    </div>
-
-    <div class="login-container">
-      <div class="logo-container">
-<img src="imagenes/logo_ingenieria.jpeg-removebg-preview-removebg-preview.png" alt="Company logo" class="company-logo">
-      </div>
-      <h2 class="text-2xl font-bold mb-5 text-gray-800">INICIAR SESION</h2>
 <form action="/login" method="POST" class="form">
-        <div class="form-group">
-          <label   for="email">CORREO ELECTRONICO:</label>
-          <input name="email" type="email" id="email" placeholder="Enter your email" class="input-field">
-        </div>
-     <div class="form-group relative">
-  <label for="password">CONTRASEÑA:</label>
-  <input name="password" type="password" id="password" placeholder="Enter your password" class="input-field pr-10">
-  <i id="togglePassword" class="fas fa-eye absolute right-3 top-3 cursor-pointer text-gray-500"></i>
-</div>
-        <button type="submit" class="login-button">LOGIN</button>
-        <div class="signup-link mt-4">
-          <p>Don't have an account? <a href="#">Sign up now</a></p>
-        </div>
-      </form>
+    <div class="form-group">
+        <label for="email">CORREO ELECTRONICO:</label>
+        <input name="email" type="email" id="email" placeholder="Enter your email" class="input-field" required>
     </div>
 
-    <div class="contact-info">
-      <div class="contact-item">
-        <i class="fas fa-phone-alt"></i>
-        <span>+57-311-5898023</span>
-      </div>
-      <div class="contact-item">
-        <i class="fas fa-envelope"></i>
-        <span>ingehidraulibombas@gmail.com</span>
-      </div>
-      <div class="contact-item">
-        <i class="fas fa-globe"></i>
-        <span>https://ingenieriahidraulibombas.com</span>
-      </div>
-      <div class="contact-item">
-        <i class="fas fa-map-marker-alt"></i>
-        <span>cra 96a 65 52, Bogotá</span>
-      </div>
+    <div class="form-group relative">
+        <label for="password">CONTRASEÑA:</label>
+        <input name="password" type="password" id="password" placeholder="Enter your password" class="input-field pr-10" required>
+        <i id="togglePassword" class="fas fa-eye absolute right-3 top-3 cursor-pointer text-gray-500"></i>
     </div>
-  </div>
 
-<Script>
+    <button type="submit" class="login-button">LOGIN</button>
 
-  if ('serviceWorker' in navigator) {
-    navigator.serviceWorker.register('/service-worker.js')
-      .then(function(registration) {
-        console.log('Service Worker registrado con éxito:', registration);
-      })
-      .catch(function(error) {
-        console.log('Error al registrar el Service Worker:', error);
-      });
-  }
+    <div class="signup-link mt-4">
+        <p>Don't have an account? <a href="#">Sign up now</a></p>
+    </div>
+</form>
 
-</Script>
+  <script>
+    // Código para el toggle de visibilidad de la contraseña
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
 
-<script>
-  const togglePassword = document.querySelector('#togglePassword');
-  const passwordField = document.querySelector('#password');
-
-  togglePassword.addEventListener('click', function () {
-    // Cambiar el tipo de input
-    const type = passwordField.type === 'password' ? 'text' : 'password';
-    passwordField.type = type;
-
-    // Cambiar el ícono
-    this.classList.toggle('fa-eye');
-    this.classList.toggle('fa-eye-slash');
-  });
-</script>
+    togglePassword.addEventListener('click', function() {
+      const type = passwordInput.type === 'password' ? 'text' : 'password';
+      passwordInput.type = type;
+      this.classList.toggle('fa-eye-slash');
+    });
+  </script>
+</body>
+</html>
