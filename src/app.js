@@ -104,15 +104,24 @@ app.post('/login', async (req, res) => {
     }
 });
 
+
+
+
+
+
+
+
+
 // Ruta para el home
 app.get('/home', (req, res) => {
     if (req.session.loggedin === true) {
         const nombreUsuario = req.session.name;
-        res.render('administracion/home.hbs', { navopertaivo: true, nombreUsuario });
+        res.render('administracion/home.hbs', { navopertaivo: true, nombreUsuario,layout: 'layouts/nav_admin.hbs' });
     } else {
         res.redirect('/login');
     }
 });
+
 
 
 

@@ -3,677 +3,544 @@
 <head>
   <meta charset="utf-8"/>
   <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-  <title>HIDRAULIBOMBAS</title>
+  <title>CERCETA</title>
   <script src="https://cdn.tailwindcss.com"></script>
   <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet"/>
-  <link rel="manifest" href="/manifest.json">
+  <link rel="icon" href="imagenes/Recurso 1hdpi.png" type="image/x-icon"/>
+    <link rel="manifest" href="/manifest.json">
 
-  <link rel="icon" href="/imagenes/Recurso 1.png" type="image/x-icon"/>
+</head>
 
-<style>
-  /* Updated Sidebar Styling */
-  .sidebar {
-    width: 16rem;
-    padding: 1rem;
-    background-color: #1f335c; /* Dark background color */
-    color: white;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-    max-height: 100vh;
-    overflow-y: auto;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  /* Sidebar Links Styling */
-  .sidebar ul li a {
-    font-size: 0.875rem;
-    padding: 0.75rem 1rem;
-    border-radius: 0.375rem;
-    display: flex;
-    align-items: center;
-    transition: background-color 0.3s, color 0.3s;
-    color: #d9d9d9;
-  }
-
-  .sidebar ul li a:hover {
-    background-color: #047885; /* Secondary color */
-    color: white;
-    transform: translateX(5px);
-  }
-
-  .sidebar ul li a.active {
-    background-color: #0769B3; /* Primary color */
-    color: white;
-  }
-
-  /* Section Titles */
-  .section-title {
-    font-size: 0.75rem;
-    font-weight: 600;
-    color: #d9d9d9; /* Light gray for section titles */
-    text-transform: uppercase;
-    margin-top: 2rem;
-    padding-left: 1rem;
-  }
-
-  /* Badge Styling */
-  .badge {
-    background-color: #ef4444;
-    color: white;
-    padding: 0.25rem 0.5rem;
-    font-size: 0.75rem;
-    border-radius: 50%;
-    margin-left: auto;
-  }
-
-  /* Search Bar */
-  .search-bar {
-    margin-bottom: 1rem;
-    display: flex;
-    align-items: center;
-    background-color: #2d3748; /* Slightly darker than sidebar */
-    border-radius: 0.375rem;
-    padding: 0.5rem;
-  }
-
-  .search-bar input {
-    border: none;
-    background: none;
-    outline: none;
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 0.875rem;
-    color: #d9d9d9;
-  }
-
-  .search-bar i {
-    color: #d9d9d9;
-  }
-
-  /* Hamburger Menu */
-  .hamburger {
-    display: none;
-    position: fixed;
-    top: 1rem;
-    left: 1rem;
-    z-index: 50;
-    cursor: pointer;
-    padding: 0.5rem;
-    border-radius: 0.375rem;
-    background-color: #0769B3; /* Primary color */
-  }
-
-  .hamburger span {
-    display: block;
-    width: 25px;
-    height: 3px;
-    background-color: white;
-    margin-bottom: 5px;
-  }
-
-  @media (max-width: 768px) {
-    .sidebar {
-      position: fixed;
-      top: 0;
-      height: 100%;
-      transform: translateX(-100%);
-      z-index: 40;
+  <style>
+    /* Estilo para el estado reducido del menú */
+    #sidebar {
+      width: 256px; /* Ancho predeterminado del menú */
+      transition: width 0.3s ease;
+    }
+    #sidebar.collapsed {
+      width: 60px; /* Ancho reducido del menú */
+    }
+    /* Oculta textos y otros elementos al colapsar */
+    #sidebar.collapsed .menu-text,
+    #sidebar.collapsed .search-bar,
+    #sidebar.collapsed .logo-text {
+      display: none;
+    }
+    /* Centra los íconos en el estado colapsado */
+    #sidebar.collapsed nav a {
+      justify-content: center;
+    }
+    #sidebar.collapsed nav a i {
+      margin: 0;
+    }
+    /* Ajusta el toggle al modo compacto */
+    #toggle-button {
+      transition: transform 0.3s ease;
+    }
+    #sidebar.collapsed #toggle-button {
+      transform: rotate(180deg);
     }
 
-    .sidebar.open {
-      transform: translateX(0);
+    /* Estilos para el modo oscuro */
+    body.dark-mode {
+      background-color: #121212;
+      color: #ffffff;
+    }
+
+    body.dark-mode #sidebar {
+      background-color: #333;
+    }
+
+    body.dark-mode .menu-text {
+      color: #ffffff;
+    }
+
+    body.dark-mode .text-gray-600 {
+      color: #cccccc;
+    }
+
+    .dark-mode .bg-gray-300 {
+      background-color: #666;
+    }
+
+    .dark-mode .bg-indigo-600 {
+      background-color: #6200ea;
+    }
+
+    .dark-mode .bg-indigo-600:hover {
+      background-color: #3700b3;
+    }
+
+    .dark-mode .text-gray-400 {
+      color: #999999;
+    }
+
+    /* Estilo del interruptor de modo oscuro */
+    .dark-mode-toggle {
+      position: relative;
+      width: 40px;
+      height: 20px;
+      background-color: #ccc;
+      border-radius: 9999px;
+      transition: background-color 0.3s;
+    }
+
+    .dark-mode-toggle .dot {
+      position: absolute;
+      top: 2px;
+      left: 2px;
+      width: 16px;
+      height: 16px;
+      background-color: white;
+      border-radius: 50%;
+      transition: transform 0.3s;
+    }
+
+    input:checked + .dark-mode-toggle {
+      background-color: #4ade80;
+    }
+
+    input:checked + .dark-mode-toggle .dot {
+      transform: translateX(20px);
+    }
+
+    /* Ocultar íconos y texto en modo compacto */
+    #sidebar.collapsed .dark-mode-content i {
+      display: none;
+    }
+
+    /* Centrar el contenido de dark-mode-content al reducir el menú */
+    #sidebar.collapsed .dark-mode-content {
+      justify-content: center;
+      width: 100%;
+    }
+
+    /* Header */
+    .header {
+   
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 20px;
+      background-color: #fff;
+      box-shadow: 0 7px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .header .logo {
+      display: flex;
+      align-items: center;
+    }
+
+    .header .logo h1 {
+      font-size: 1.5rem;
+      margin-left: 10px;
+      font-weight: bold;
+    }
+
+    .header .socials i {
+      margin-left: 15px;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #4a4a4a;
+    }
+
+    .header .socials i:hover {
+      color: #6200ea;
+    }
+  </style>
+<style>
+  /* Estilos para el menú hamburguesa */
+  .hamburger {
+    display: none;
+    font-size: 2rem;
+    cursor: pointer;
+  }
+
+  /* Menú en pantallas pequeñas */
+  @media (max-width: 768px) {
+    #sidebar {
+      display: none; /* Ocultar el sidebar en pantallas pequeñas */
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 80%; /* El menú ocupará el 80% de la pantalla */
+      height: 100%;
+      background-color: #fff;
+      box-shadow: 4px 0 6px rgba(0, 0, 0, 0.1);
+      z-index: 10;
+      transition: transform 0.3s ease-in-out;
+      transform: translateX(-100%); /* Ocultamos el sidebar fuera de la pantalla */
+    }
+
+    #sidebar.open {
+      display: block;
+      transform: translateX(0); /* Lo muestra */
     }
 
     .hamburger {
-      display: block;
+      display: block; /* Mostrar el ícono de hamburguesa */
     }
   }
+  /* Estilo para el contenido principal */
+#content {
+  margin-left: 256px; /* Igual al ancho del sidebar */
+  margin-top: 60px; /* Altura aproximada del header */
+  transition: margin-left 0.3s ease; /* Transición para el colapso */
+}
 
-  /* Dark Mode Styles */
-  .dark .sidebar {
-    background-color: #1f335c;
-    color: #d9d9d9;
+#sidebar.collapsed + #content {
+  margin-left: 60px; /* Ajusta el margen cuando el sidebar está colapsado */
+}
+
+@media (max-width: 768px) {
+  #content {
+    margin-left: 0; /* Elimina el margen para pantallas pequeñas */
+  }
+}
+/* Asegura que el header esté fijo */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+/* Asegura que el sidebar esté fijo */
+#sidebar {
+  position: fixed;
+  top: 60px; /* Debajo del header */
+  left: 0;
+  height: calc(100vh - 60px); /* Altura de la pantalla menos el header */
+  overflow-y: auto;
+  z-index: 5;
+}
+
+/* Ajusta el contenido principal */
+#content {
+  margin-top: 60px; /* Espacio para el header */
+  margin-left: 256px; /* Espacio para el sidebar */
+  padding: 20px;
+  transition: margin-left 0.3s ease;
+}
+
+/* Cuando el sidebar esté colapsado */
+#sidebar.collapsed + #content {
+  margin-left: 60px; /* Ajusta el margen izquierdo */
+}
+
+/* Para pantallas pequeñas */
+@media (max-width: 768px) {
+  #content {
+    margin-left: 0; /* Elimina el espacio lateral en pantallas pequeñas */
   }
 
-  .dark .sidebar ul li a {
-    color: #d9d9d9;
+  #sidebar {
+    display: none; /* Oculta el sidebar por defecto */
   }
 
-  .dark .sidebar ul li a:hover {
-    background-color: #047885;
-    color: white;
+  #sidebar.open {
+    display: block; /* Muestra el sidebar cuando está abierto */
   }
 
-  .dark .section-title {
-    color: #a0aec0;
+}#sidebar.open {
+  display: block;
+  transform: translateX(0); /* Lo muestra */
+}
+@media (max-width: 768px) {
+  #sidebar {
+    display: none;
   }
-
-  .dark .search-bar {
-    background-color: #2d3748;
-  }
-
-  .dark .search-bar input {
-    color: #d9d9d9;
-  }
-
-  .dark .hamburger {
-    background-color: #2d3748;
-  }
-     @media (max-width: 1024px) {
-  .sidebar {
-    position: fixed;
-    top: 0;
-    height: 100%;
-    transform: translateX(-100%);
-    z-index: 40;
-  }
-
-  .sidebar.open {
-    transform: translateX(0);
-  }
-
-  .hamburger {
+  #sidebar.open {
     display: block;
   }
 }
-#user-name {
-  font-size: 1rem;
-  font-weight: 600;
-  color: #white; /* O usa el color adecuado */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilo global para el modo oscuro */
+body.dark-mode {
+  background-color: #121212; /* Fondo oscuro para toda la página */
+  color: #ffffff; /* Texto claro para contraste */
 }
-.dark #user-name {
-  color: #e2e8f0; /* Ajuste para modo oscuro */
+
+/* Ajustes para contenedores y fondos internos */
+body.dark-mode #sidebar {
+  background-color: #333; /* Fondo oscuro para el sidebar */
 }
+
+body.dark-mode #content {
+  background-color: #1e1e1e; /* Fondo oscuro para el contenido principal */
+}
+
+body.dark-mode header {
+  background-color: #222; /* Fondo oscuro para el header */
+  color: #ffffff;
+}
+
+body.dark-mode .menu-text {
+  color: #cccccc; /* Texto del menú con un tono más claro */
+}
+
+body.dark-mode .text-gray-600 {
+  color: #bbbbbb; /* Ajuste para otros textos grises */
+}
+
+body.dark-mode .bg-gray-100 {
+  background-color: #1e1e1e; /* Cambia fondos claros */
+}
+
+body.dark-mode .bg-gray-300 {
+  background-color: #444; /* Ajuste para fondos gris intermedio */
+}
+
+body.dark-mode .bg-indigo-600 {
+  background-color: #6200ea; /* Resalta botones en modo oscuro */
+}
+
+body.dark-mode .bg-indigo-600:hover {
+  background-color: #3700b3; /* Resalta botones al pasar */
+}
+body.dark-mode input,
+body.dark-mode textarea,
+body.dark-mode select {
+  color: black; /* Texto blanco */
+
+}
+#titulo {
+  color: black;
+}
+
+
+
+body.dark-mode #titulo {
+  color: white; /* Cambia el color de h1 a blanco en modo oscuro */
+}
+
+body.dark-mode #social i {
+  color: white; /* Cambia el color de los íconos a blanco en modo oscuro */
+}
+
+body.dark-mode h2 {
+  color: black; /* Cambia el color de los íconos a blanco en modo oscuro */
+}
+
+
+
+
+  @media (max-width: 768px) {
+
+#social{
+  display: none;
+}
+
+#social{
+  display: none;
+}
+
+    }
+
+  @media (max-width: 500px) {
+
+#social{
+  display: none;
+}
+
+    }
+
+
+
+
+
 
 </style>
 
-</head>
-<div class="overlay" id="overlay"></div>
 
-<body class="bg-gray-100 dark:bg-gray-900 transition-colors duration-300">
-  <div class="flex h-screen">
-    <!-- Hamburger Icon -->
-    <div class="hamburger" id="hamburger-menu">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
+
+
+
+
+
+  <div class="flex flex-col">
+    <!-- Header -->
+
+    <header class="header">
+      <div class="logo flex items-center">
+<div class="logo flex items-center">
+  <img src="imagenes/Recurso 1hdpi.png" alt="Logo" class="w-10 h-10 rounded-full"> <!-- Asegúrate de ajustar el tamaño -->
+        </div>
+        <h1  id="titulo" >EMPRESA</h1>
+      </div>
+  <div id="social" class="socials flex items-center">
+  <i class="fab fa-facebook"></i>
+  <i class="fab fa-twitter"></i>
+  <i class="fab fa-instagram"></i>
+  <i class="fab fa-linkedin"></i>
+</div>
+
+
+      <!-- Ícono de menú hamburguesa (solo en pantallas pequeñas) -->
+      <div class="hamburger" id="hamburger-menu">
+        <i class="fas fa-bars"></i>
+      </div>
+    </header>
 
     <!-- Sidebar -->
-    <div class="sidebar" id="sidebar">
-      <!-- Profile Section -->
-      <div class="profile-section">
-        <div class="profile-info">
-          <img  id="perfil" src="imagenes/logo_ingenieria.jpeg-removebg-preview.png" alt="Profile Picture" />
+    <div id="sidebar" class="bg-white h-screen shadow-lg relative">
+      <!-- Search bar -->
+      <div class="px-6 py-4 search-bar">
+        <div class="relative">
+          <input
+            type="text"
+            placeholder="Search..."
+            class="w-full py-2 pl-10 pr-4 bg-gray-100 rounded-lg focus:outline-none"
+          />
+          <i class="fas fa-search absolute left-3 top-2.5 text-gray-400"></i>
         </div>
       </div>
 
+      <!-- Navigation menu -->
+      <nav class="px-6 py-4">
+        <a href="/menuAdministrativo" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+          <i class="fas fa-home w-6 text-lg"></i>
+          <span class="ml-3 menu-text">inicio</span>
+        </a>
+       <a href="/menu_usuarios" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-users w-6 text-lg"></i>
+    <span class="ml-3 menu-text">Usuarios</span>
+</a>
+
+       <a href="/menu_inmuebles" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-building w-6 text-lg"></i>
+    <span class="ml-3 menu-text">COMPETICIONES</span>
+</a>
+
+      <a href="/menu_comunicados" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-bullhorn w-6 text-lg"></i>
+    <span class="ml-3 menu-text">FOTOGRAFIAS</span>
+</a>
+
+   <a href="/menu_alertas" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+    <i class="fas fa-bell w-6 text-lg"></i>
+    <span class="ml-3 menu-text">VENTAS</span>
+</a>
+
+      </nav>
+
+      <!-- Footer -->
+      <div class="px-6 py-4 border-t">
+        <a href="/logout" class="flex items-center py-3 text-gray-600 hover:text-indigo-600">
+          <i class="fas fa-sign-out-alt w-6 text-lg"></i>
+          <span class="ml-3 menu-text">Logout</span>
+        </a>
 
 
 
-<div class="flex items-center justify-end space-x-4 p-4">
-  <div id="user-name" class="text-gray-700 dark:text-gray-300 font-semibold">
-    {{name}}
-  </div>
-
-</div>
 
 
-      <!-- Search Bar -->
-      <div class="search-bar">
-        <input type="text" placeholder="Buscar...">
-        <i class="fas fa-search"></i>
-      </div>
-
-      <!-- Navigation Links -->
-      <nav>
 
         
-        <ul>
-          <!-- General Section -->
-          <div class="section-title">General</div>
-          <li class="mb-2">
-  <a class="flex items-center" href="/menuAdministrativo" data-link="/menuAdministrativo" title="Vista General">
-              <i class="fas fa-home mr-2"></i> Vista General
-            </a>
-          </li>
-
-
-
-  <!-- Property Management Section -->
-          <div class="section-title">--Usuarios--</div>
-       
- <!-- edificios Section -->
-<!-- Usuarios Section -->
-<li class="mb-2">
-  <a class="flex items-center justify-between cursor-pointer"  data-links="/agregar_usuarios,/menuOperativo,/menuFinanciero"  href="#" onclick="toggleSubmenu('submenu-Usuarios')">
-    <i class="fas fa-user mr-2"></i> Usuarios
-    <i class="fas fa-chevron-down"></i>
-  </a>
-  <ul id="submenu-Usuarios" class="hidden ml-4">
-    <li class="mb-2">
-      <a class="flex items-center" href="/agregar_usuario" title="Usuarios">
-        <i class="fas fa-user-plus mr-2"></i> Agregar
-      </a>
-    </li>
-
-    <li class="mb-2">
-      <a class="flex items-center" href="/consultar_usuarios" title="Consultar Usuarios">
-        <i class="fas fa-user-check mr-2"></i> Consultar
-      </a>
-    </li>
-  </ul>
-</li>
-
-
-
-
-
-
-
-
-
-
-
-  <!-- Property Management Section -->
-          <div class="section-title">--Clientes--</div>
-       
- <!-- edificios Section -->
-<!-- Usuarios Section -->
-<li class="mb-2">
-  <a class="flex items-center justify-between cursor-pointer"  data-links="/agregar_usuarios,/menuOperativo,/menuFinanciero"  href="#" onclick="toggleSubmenu('submenu-Clientes')">
-    <i class="fas fa-user mr-2"></i> Clientes
-    <i class="fas fa-chevron-down"></i>
-  </a>
-  <ul id="submenu-Clientes" class="hidden ml-4">
-    <li class="mb-2">
-      <a class="flex items-center" href="/agregar_clientes" title="Clientes">
-        <i class="fas fa-user-plus mr-2"></i> Agregar
-      </a>
-    </li>
-
-    <li class="mb-2">
-      <a class="flex items-center" href="/consultar_clientes" title="Consultar Clientes">
-        <i class="fas fa-user-check mr-2"></i> Consultar
-      </a>
-    </li>
-  </ul>
-</li>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<!-- Property Management Section -->
-<div class="section-title">--iNFORME--</div>
-
-
-
-<!-- Blog para Residentes Section -->
-<li class="mb-2">
-  <a class="flex items-center justify-between cursor-pointer" href="#" onclick="toggleSubmenu('submenu-Informe')">
-    <i class="fas fa-bell mr-2"></i> Informes
-    <i class="fas fa-chevron-down"></i>
-  </a>
-  <ul id="submenu-Informe" class="hidden ml-4">
-    <li class="mb-2">
-      <a class="flex items-center" href="/realizar_informe" title="Usar Plantilla">
-        <i class="fas fa-file-alt mr-2"></i> Crear Informe
-      </a>
-    </li>
-    <li class="mb-2">
-      <a class="flex items-center" href="/Consulta_informes_realizados" title="Nueva Publicación">
-        <i class="fas fa-eye mr-2"></i> Consultar Informes 
-      </a>
-    </li>
-  </ul>
-</li>
-
-
-<!-- Property Management Section -->
-<div class="section-title">--Alertas--</div>
-
-
-
-<!-- Blog para Residentes Section -->
-<li class="mb-2">
-  <a class="flex items-center justify-between cursor-pointer" href="#" onclick="toggleSubmenu('submenu-ALERTA')">
-    <i class="fas fa-bell mr-2"></i>  Alertas
-    <i class="fas fa-chevron-down"></i>
-  </a>
-  <ul id="submenu-ALERTA" class="hidden ml-4">
-    <li class="mb-2">
-      <a class="flex items-center" href="/agregar_alertas" title="Usar Plantilla">
-        <i class="fas fa-file-alt mr-2"></i> Crear alertas
-      </a>
-    </li>
-    <li class="mb-2">
-      <a class="flex items-center" href="/consultar_alertas" title="Nueva Publicación">
-        <i class="fas fa-eye mr-2"></i> Consultar alertas
-      </a>
-    </li>
-  </ul>
-</li>
-
-
-
-
-
-
-<!-- apartamentos Section -->
-<li class="mb-2">
-  <a class="flex items-center justify-between cursor-pointer" href="#" onclick="toggleSubmenu('submenu-apartamentos')"  data-links="/agregar_apartamento,/Consulta_apartamentos">
-    <i class="fas fa-city mr-2"></i> Geolocalizaion
-    <i class="fas fa-chevron-down"></i>
-  </a>
-  <ul id="submenu-apartamentos" class="hidden ml-4">
-    <li class="mb-2">
-      <a class="flex items-center" href="/geolocalizacion" title="Inmuebles">
-        <i class="fas fa-folder-open mr-2"></i> consultar
-      </a>
-    </li>
-  
-  </ul>
-</li>
-
-      
-<li class="mb-2">
-  <a class="flex items-center" href="/logout" title="Cerrar sesión">
-    <i class="fas fa-sign-out-alt mr-2"></i> Cerrar sesión 
-  </a>
-</li>
-
-        </ul>
-      </nav>
-<br>
-
-      <!-- Theme Toggle Button -->
-      <div class="mt-auto">
-        <button id="theme-toggle" class="w-full py-2 px-4 text-white bg-blue-500 hover:bg-blue-600 rounded-lg">
-          Cambiar Tema
-        </button>
+        <div class="flex items-center py-3 dark-mode-content">
+          <!-- Default Moon Icon (for Light Mode) -->
+          <i class="fas fa-moon w-6 text-gray-600 moon-icon"></i>
+          <!-- Sun Icon for Dark Mode -->
+          <i class="fas fa-sun w-6 text-yellow-500 sun-icon hidden"></i>
+          <span id="darkModeText" class="ml-3 menu-text">Dark Mode</span>
+          <label class="ml-auto flex items-center cursor-pointer">
+            <input type="checkbox" class="sr-only" id="darkModeToggle" />
+            <div class="dark-mode-toggle">
+              <div class="dot"></div>
+            </div>
+          </label>
+        </div>
       </div>
-    </div>
 
-    <!-- Main Content -->
-    <div class="flex-1 p-6 bg-gray-50 dark:bg-gray-800 overflow-auto transition-colors duration-300">
-      <!-- Placeholder for dynamic body content -->
-
-   <div class="main-content">
-    
-<div id="notificationPopup" class="hidden fixed top-16 right-16 bg-white p-4 shadow-lg rounded-lg z-50 w-80">
-    <h3 class="text-lg font-bold mb-2">Notificaciones</h3>
-    <ul id="notificationList" class="text-gray-700 space-y-2"></ul>
-<button onclick="markNotificationsAsRead(usuario_id)" class="mt-3 text-blue-500 w-full text-center py-2 rounded-lg bg-blue-100 hover:bg-blue-200">
-  Marcar todas como leídas
-</button>
-
-
-</div>
-
-<audio id="notificationSound" src="alertas/level-up-2-199574.mp3" preload="auto"></audio>
-
-
-
-    {{{body}}}
-    
-</div>
-
+ 
     </div>
   </div>
 
+<div id="content" class="flex-grow p-6 overflow-auto bg-gray-100">
 
+    {{{body}}}
+    <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Seleccionar elementos del DOM
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
 
-
-<script>
-  const usuario_id = {{usuario_id}};
-  console.log('ID del usuario:', usuario_id);
-
-  // Ahora puedes usar `usuario_id` para lo que necesites en el frontend.
-</script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.1/socket.io.min.js"></script>
-<script>
-  // Conexión al servidor de Socket.IO
-
-
-
-
-// Variable para almacenar el intervalo
-let notificationInterval;
-
-// Función para reproducir el sonido
-function playNotificationSound() {
-  const notificationSound = document.getElementById('notificationSound');
-  notificationSound.play().catch(error => {
-    console.error("Error al intentar reproducir el sonido:", error);
-  });
-}
-
-// Función para iniciar la repetición del sonido cada 7 segundos
-function startNotificationSound() {
-  // Reproducir el sonido de inmediato y luego cada 7 segundos
-  playNotificationSound();
-  notificationInterval = setInterval(playNotificationSound, 7000);  // 7000 ms = 7 segundos
-}
-
-// Función para detener el sonido
-function stopNotificationSound() {
-  clearInterval(notificationInterval);  // Detener el intervalo
-}
-
-// Función para obtener las notificaciones del backend
-async function getNotifications() {
-  try {
-    const response = await fetch('/notifications');
-    const data = await response.json();
-
-    // Verificar si hay notificaciones no leídas
-    if (data.notificaciones.length > 0) {
-      // Mostrar el contador de notificaciones
-      document.getElementById('notificationCount').innerText = data.notificaciones.length;
-      document.getElementById('notificationCount').classList.remove('hidden');
-
-      // Mostrar las notificaciones en el popup
-      const notificationList = document.getElementById('notificationList');
-      notificationList.innerHTML = '';  // Limpiar lista de notificaciones
-      data.notificaciones.forEach(notification => {
-        const listItem = document.createElement('li');
-        listItem.innerText = `Alerta ID: ${notification.alerta_id} - Tienes un mantenimiento pendiente.`;
-        notificationList.appendChild(listItem);
+    if (hamburgerMenu && sidebar) {
+      // Agregar el evento de clic al ícono de hamburguesa
+      hamburgerMenu.addEventListener("click", () => {
+        console.log("Hamburguesa clickeada");
+        sidebar.classList.toggle("open"); // Alternar clase 'open'
       });
-
-      // Iniciar el sonido solo si hay notificaciones pendientes
-      startNotificationSound();
     } else {
-      // Detener el sonido si no hay notificaciones pendientes
-      stopNotificationSound();
+      console.error("No se encontró el menú hamburguesa o el sidebar.");
     }
-  } catch (error) {
-    console.error('Error al obtener las notificaciones:', error);
-  }
-}
+  });
+</script>
 
-// Función para marcar las notificaciones como leídas
-async function markNotificationsAsRead(userId) {
-  try {
-    const response = await fetch(`/notifications/markAsRead/${userId}`, { method: 'POST' });
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    // Lógica del modo oscuro
+    const darkModeToggle = document.getElementById('darkModeToggle');
+    const body = document.body;
+    const moonIcon = document.querySelector('.moon-icon');
+    const sunIcon = document.querySelector('.sun-icon');
+    const darkModeText = document.getElementById('darkModeText');
 
-    if (response.ok) {
-      // Detener el sonido cuando las notificaciones sean marcadas como leídas
-      stopNotificationSound();
-
-      // Opcional: Actualizar el contador de notificaciones a 0
-      document.getElementById('notificationCount').innerText = '0';
-      document.getElementById('notificationCount').classList.add('hidden');
-    } else {
-      console.error('Error al marcar las notificaciones como leídas.');
+    if (localStorage.getItem('darkMode') === 'true') {
+      body.classList.add('dark-mode');
+      moonIcon.classList.add('hidden');
+      sunIcon.classList.remove('hidden');
+      darkModeText.textContent = "Light Mode";
+      darkModeToggle.checked = true;
     }
-  } catch (error) {
-    console.error('Error al hacer la solicitud:', error);
-  }
-}
 
-// Llamar a la función al cargar la página o cuando sea necesario
-window.addEventListener('load', () => {
-  // Asegúrate de que el sonido solo suene si hay notificaciones no leídas
-  getNotifications();
-});
-
-// Detectar la primera interacción del usuario en la página para permitir el sonido
-document.addEventListener('click', function() {
-  // Asegurarse de que el sonido solo suene si hay notificaciones pendientes
-  getNotifications();
-}, { once: true });  // Asegura que el evento se dispare solo una vez
-
-
-
-
-
-
-
-// Función para marcar todas las notificaciones como leídas
-async function markNotificationsAsRead(usuarioId) {
-  try {
-    const response = await fetch('/mark-notifications-read', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ usuario_id: usuarioId }),
+    darkModeToggle.addEventListener('change', () => {
+      if (darkModeToggle.checked) {
+        body.classList.add('dark-mode');
+        moonIcon.classList.add('hidden');
+        sunIcon.classList.remove('hidden');
+        darkModeText.textContent = "Light Mode";
+        localStorage.setItem('darkMode', 'true');
+      } else {
+        body.classList.remove('dark-mode');
+        moonIcon.classList.remove('hidden');
+        sunIcon.classList.add('hidden');
+        darkModeText.textContent = "Dark Mode";
+        localStorage.setItem('darkMode', 'false');
+      }
     });
-
-    const data = await response.json();
-    
-    if (response.ok) {
-      console.log(data.message);  // Mensaje de éxito
-
-      // Recargar la página después de marcar las notificaciones como leídas
-      location.reload();  // Recarga la página para actualizar el estado de las notificaciones
-    } else {
-      console.error('Error al marcar las notificaciones como leídas:', data.error);
-    }
-  } catch (error) {
-    console.error('Error al realizar la solicitud:', error);
-  }
-}
-
-
-
-
-
-
+  });
 </script>
-<script>
+    <script>
+  // Lógica para el menú hamburguesa
+  document.addEventListener("DOMContentLoaded", () => {
+    // Lógica para el menú hamburguesa
+    const hamburgerMenu = document.getElementById("hamburger-menu");
+    const sidebar = document.getElementById("sidebar");
 
-// Function to toggle the notification popup
-function toggleNotificationPopup() {
-    const popup = document.getElementById('notificationPopup');
-    popup.classList.toggle('hidden'); // Solo mostrar o esconder el popup al hacer clic
-
-    // Si el popup está visible, agregamos un event listener para hacer clic fuera de él
-    if (!popup.classList.contains('hidden')) {
-        document.addEventListener('click', closePopupOnClickOutside);
-    } else {
-        document.removeEventListener('click', closePopupOnClickOutside);
-    }
-}
-
-// Function to close the popup when clicking outside
-function closePopupOnClickOutside(event) {
-    const popup = document.getElementById('notificationPopup');
-    const bell = document.getElementById('notificationBell');
-    
-    // Verificar si el clic ocurrió fuera del popup y de la campana de notificaciones
-    if (!popup.contains(event.target) && event.target !== bell) {
-        popup.classList.add('hidden'); // Ocultar el popup
-        document.removeEventListener('click', closePopupOnClickOutside); // Remover el listener
-    }
-}
-
-
-// Hamburger menu toggle
-const hamburger = document.getElementById('hamburger-menu');
-const sidebar = document.getElementById('sidebar');
-
-hamburger.addEventListener('click', () => {
-    sidebar.classList.toggle('open');
-});
-
-
-
-
-// Theme toggle logic
-const themeToggle = document.getElementById('theme-toggle');
-const htmlElement = document.documentElement;
-
-themeToggle.addEventListener('click', () => {
-    htmlElement.classList.toggle('dark');
-    if (htmlElement.classList.contains('dark')) {
-        localStorage.setItem('theme', 'dark');
-    } else {
-        localStorage.setItem('theme', 'light');
-    }
-});
-
-// Load theme from localStorage
-const storedTheme = localStorage.getItem('theme');
-if (storedTheme === 'dark') {
-    htmlElement.classList.add('dark');
-}
-
-// Mark the active link in the sidebar
-const currentPath = window.location.pathname;
-const menuLinks = document.querySelectorAll('.sidebar ul li a');
-
-menuLinks.forEach(link => {
-    if (link.dataset.link === currentPath) {
-        link.classList.add('active');
-    }
-});
-
-// Submenu toggle
-function toggleSubmenu(id) {
-    const submenu = document.getElementById(id);
-    submenu.classList.toggle('hidden');
-}
-
-
-</script>
-
-
-
-
-
-
-
-
-<script>
-
-
-
-
-
-
-
-
-
-
-
-</script>
-<script>
-  const nombre = "{{name}}";
-</script>
-
+    hamburgerMenu.addEventListener("click", () => {
+      sidebar.classList.toggle("open"); // Agregar o quitar la clase "open" para mostrar/ocultar el sidebar
+    });
+  });
+  </script>
+</body>
+</html>
